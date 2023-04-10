@@ -17,7 +17,8 @@ create table if not exists List_of_albums (
 
 create table if not exists List_of_tracks(
 	track_id serial primary key,
-	album_id INTEGER not null references List_of_albums(album_id), 
+	album_id INTEGER not null,
+	foreign key (album_id) references List_of_albums(album_id),
 	name text,
 	duration integer
 );
@@ -46,4 +47,3 @@ create table if not exists TrackCompilation (
 	track_id INTEGER references List_of_tracks (track_id),
 	primary key (track_id, compilation_id)
 );
-
