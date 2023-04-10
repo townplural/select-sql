@@ -12,7 +12,7 @@ values('Rap');
 
 insert into list_of_genres(genre_name)
 values('Phonk');
--------------------------------------------------------
+-----------------------------------------------------
 insert into list_of_albums(year, name)
 values(2018, 'Boltcutter');
 
@@ -40,32 +40,32 @@ values(2017, 'UNRENDERED');
 insert into list_of_albums(year, name)
 values(2018, 'Pink Lotus');
 -------------------------------------------------------
-insert into list_of_artists(album_id, name)
-values('1', 'Moscow Death Brigade');
+insert into list_of_artists(name)
+values('Moscow Death Brigade');
 
-insert into list_of_artists(album_id, name)
-values('2', 'Agnostic Front');
+insert into list_of_artists(name)
+values('Agnostic Front');
 
-insert into list_of_artists(album_id, name)
-values('3', 'Boulevard depo');
+insert into list_of_artists(name)
+values('Boulevard depo');
 
-insert into list_of_artists(album_id, name)
-values('4', 'Pharaoh');
+insert into list_of_artists(name)
+values('Pharaoh');
 
-insert into list_of_artists(album_id, name)
-values('5', 'Rhiana');
+insert into list_of_artists(name)
+values('Rhiana');
 
-insert into list_of_artists(album_id, name)
-values('6', 'The Weeknd');
+insert into list_of_artists(name)
+values('The Weeknd');
 
-insert into list_of_artists(album_id, name)
-values('7', 'Yung lean');
+insert into list_of_artists(name)
+values('Yung lean');
 
-insert into list_of_artists(album_id, name)
-values('8', 'BONES');
+insert into list_of_artists(name)
+values('BONES');
 
-insert into list_of_artists(album_id, name)
-values('9', 'Freddie Dredd');
+insert into list_of_artists(name)
+values('Freddie Dredd');
 -------------------------------------------------------
 insert into list_of_tracks(album_id, name, duration)
 values ('1','Renegade Stomp',175);
@@ -147,61 +147,7 @@ values ('Best of BONES',2023);
 
 insert into list_of_compilations(name,year)
 values ('Best of Freddie Dredd',2023);
--------------------------------------------------------
-insert into albumtrack(track_id, album_id)
-values(1,1);
-
-insert into albumtrack(track_id, album_id)
-values(2,1);
-
-insert into albumtrack(track_id, album_id)
-values(3,2);
-
-insert into albumtrack(track_id, album_id)
-values(4,2);
-
-insert into albumtrack(track_id, album_id)
-values(5,3);
-
-insert into albumtrack(track_id, album_id)
-values(6,3);
-
-insert into albumtrack(track_id, album_id)
-values(7,4);
-
-insert into albumtrack(track_id, album_id)
-values(8,4);
-
-insert into albumtrack(track_id, album_id)
-values(9,5);
-
-insert into albumtrack(track_id, album_id)
-values(10,5);
-
-insert into albumtrack(track_id, album_id)
-values(11,6);
-
-insert into albumtrack(track_id, album_id)
-values(12,6);
-
-insert into albumtrack(track_id, album_id)
-values(13,7);
-
-insert into albumtrack(track_id, album_id)
-values(14,7);
-
-insert into albumtrack(track_id, album_id)
-values(15,8);
-
-insert into albumtrack(track_id, album_id)
-values(16,8);
-
-insert into albumtrack(track_id, album_id)
-values(17,9);
-
-insert into albumtrack(track_id, album_id)
-values(18,9);
--------------------------------------------------------
+-----------------------------------------------------
 insert into artistalbum(artist_id, album_id)
 values (1,1);
 
@@ -228,7 +174,7 @@ values (8,8);
 
 insert into artistalbum(artist_id, album_id)
 values (9,9);
--------------------------------------------------------
+-----------------------------------------------------
 insert into genreartist(genre_id, artist_id)
 values(1,1);
 
@@ -255,7 +201,7 @@ values(4,8);
 
 insert into genreartist(genre_id, artist_id)
 values(5,9);
--------------------------------------------------------
+-----------------------------------------------------
 insert into trackcompilation(compilation_id, track_id)
 values(1,1);
 
@@ -309,4 +255,3 @@ values(9,17);
 
 insert into trackcompilation(compilation_id, track_id)
 values(9,18);
-
