@@ -2,7 +2,8 @@ select year, name from list_of_albums
 where year = 2018;
 
 select name, duration from list_of_tracks
-order by duration desc;
+order by duration desc
+limit 1;
 
 select name, duration from list_of_tracks 
 where duration >= 210;
