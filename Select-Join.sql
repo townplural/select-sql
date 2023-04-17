@@ -18,47 +18,56 @@ GROUP BY loal."name";
 
 
 --Все исполнители, которые не выпустили альбомы в 2020 году.
-SELECT loar."name" , loal."name" FROM artistalbum aa 
-LEFT JOIN list_of_albums loal ON aa.album_id = loal.album_id 
-LEFT JOIN list_of_artists loar ON aa.artist_id = loar.artist_id
-WHERE year != 2020;
-
+SELECT loar."name"  FROM list_of_artists loar  
+WHERE loar."name" NOT IN(
+SELECT loar."name" FROM list_of_artists loar  
+LEFT JOIN artistalbum aa  ON loar.artist_id = aa.artist_id 
+LEFT JOIN list_of_albums loal ON aa.album_id = loal.album_id  
+WHERE YEAR = 2020
+);
 
 -- Названия сборников, в которых присутствует конкретный исполнитель (Boulevard Depo).
-SELECT loc."name" FROM list_of_compilations loc 
-WHERE loc.name LIKE '%Boulevard Depo%';
+SELECT DISTINCT loc.name FROM list_of_compilations loc 
+LEFT JOIN trackcompilation tc ON loc.compilation_id = tc.compilation_id 
+LEFT JOIN list_of_tracks lot ON tc.track_id = lot.track_id 
+LEFT JOIN list_of_albums loal ON lot.album_id = loal.album_id 
+LEFT JOIN artistalbum aa ON loal.album_id = aa.album_id 
+LEFT JOIN list_of_artists loar ON aa.artist_id = loar.artist_id 
+WHERE loar.name = 'Boulevard depo';
 
 
 -- Названия альбомов, в которых присутствуют исполнители более чем одного жанра.
-SELECT loal.name FROM list_of_genres log2
-LEFT JOIN genreartist ga ON log2.genre_id = ga.genre_id 
-LEFT JOIN list_of_artists loar ON ga.artist_id = loar.artist_id 
-LEFT JOIN artistalbum aa ON loar.artist_id  = aa.artist_id 
-LEFT JOIN list_of_albums loal ON  aa.album_id  = loal.album_id
-GROUP BY loal.name
-HAVING COUNT(DISTINCT log2.genre_name) > 1 
-ORDER BY loal."name";
-
+SELECT DISTINCT loal."name", log2.genre_id  FROM list_of_albums loal
+LEFT JOIN artistalbum aa ON loal.album_id = aa.album_id 
+LEFT JOIN list_of_artists loar ON aa.artist_id = loar.artist_id 
+LEFT JOIN genreartist ga  ON loar.artist_id = ga.artist_id 
+LEFT JOIN list_of_genres log2 ON ga.genre_id = log2.genre_id 
+GROUP BY loal."name", log2.genre_id 
+HAVING count(log2.genre_id) > 1;
 
 -- Наименования треков, которые не входят в сборники.
 SELECT lot."name"  FROM list_of_tracks lot 
 LEFT JOIN trackcompilation tc ON lot.track_id = tc.track_id 
-LEFT JOIN list_of_compilations loc ON tc.compilation_id = loc.compilation_id
-ORDER BY loc.compilation_id DESC  
-LIMIT 1;
+WHERE tc.track_id IS NULL;
 
 
 -- Исполнитель или исполнители, написавшие самый короткий по продолжительности трек, — теоретически таких треков может быть несколько.
-SELECT loar.name, lot."name", lot.duration  FROM list_of_artists loar
+
+select loar."name" FROM list_of_artists loar
 LEFT JOIN artistalbum aa ON loar.artist_id = aa.artist_id 
-LEFT JOIN list_of_tracks lot ON aa.album_id = lot.album_id 
-ORDER BY duration ASC 
-LIMIT 3;
+LEFT JOIN list_of_albums loal ON aa.album_id = loal.album_id 
+LEFT JOIN list_of_tracks lot ON loal.album_id = lot.album_id 
+WHERE lot.duration = (
+SELECT MIN (lot2.duration) FROM list_of_tracks lot2 
+);
 
 -- Названия альбомов, содержащих наименьшее количество треков.
-SELECT loal.name, COUNT(lot.name) from list_of_albums loal
-LEFT JOIN list_of_tracks lot on loal.album_id = lot.album_id 
-GROUP BY loal.name
-ORDER BY COUNT(lot.name) ASC 
-LIMIT 3;
-
+SELECT loal.name FROM list_of_albums loal 
+LEFT JOIN list_of_tracks lot ON loal.album_id = lot.album_id 
+GROUP BY loal.album_id 
+HAVING COUNT(lot.track_id) = (
+SELECT COUNT(lot.track_id) FROM list_of_tracks lot
+GROUP BY loal.album_id 
+ORDER BY 1
+LIMIT 1
+);
